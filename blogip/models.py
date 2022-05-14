@@ -20,7 +20,7 @@ class User(db.Model, UserMixin):
     image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
     password = db.Column(db.String(60), nullable=False)
     posts = db.relationship('Post', backref='author', lazy=True)
-    role_id = db.Column(db.Integer,db.ForeignKey('roles.id'))
+    
 
     
 
@@ -40,19 +40,22 @@ class Post(db.Model):
         return f"Post('{self.title}', '{self.date_posted}')"
     
     
-class Role(db.Model):
-    __tablename__ = 'roles'
 
 
-    id = db.Column(db.Integer,primary_key = True)
-    name = db.Column(db.String(255))
-    users = db.relationship('User',backref = 'role',lazy="dynamic")
+class Subscriber(db.Model):
+    __tablename__='subscribers'
 
+    id=db.Column(db.Integer,primary_key=True)
+    email = db.Column(db.String(255),unique=True,index=True)
 
+    def save_subscriber(self):
+        db.session.add(self)
+        db.session.commit()
 
     def __repr__(self):
-        return f'User {self.name}'
-    
+        return f'Subscriber {self.email}'
+
+
 class Comment(db.Model):
     __tablename__ = 'comments'
 
