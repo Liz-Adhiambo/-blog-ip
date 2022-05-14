@@ -20,9 +20,15 @@ def create_app(config_class=Config):
 
     # Initializing flask extensions
     db.init_app(app)
+    bcrypt.init_app(app)
+    login_manager.init_app(app)
 
 
     
+    
+    from blogip.users.routes import users
     from blogip.main.routes import main
+    
+    app.register_blueprint(users)
     app.register_blueprint(main)
     return app
