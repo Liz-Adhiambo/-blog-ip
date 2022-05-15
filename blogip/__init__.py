@@ -27,8 +27,10 @@ def create_app(config_class=Config):
     
     
     from blogip.users.routes import users
+    from blogip.posts.routes import posts
     from blogip.main.routes import main
     
     app.register_blueprint(users)
+    app.register_blueprint(posts)
     app.register_blueprint(main)
     return app
